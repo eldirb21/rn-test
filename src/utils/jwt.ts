@@ -1,6 +1,6 @@
 import jwtEncode from "jwt-encode";
 
-const secret = "MY_SECRET";
+const secret = process.env.EXPO_PUBLIC_SECRET_KEY || ""
 
 export const generateJWT = (
   email: string

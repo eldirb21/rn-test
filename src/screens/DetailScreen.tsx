@@ -1,15 +1,14 @@
+import { ScreenContainer, Texts } from "@atoms";
+import { ProductCard } from "@molecules";
 import React from "react";
 
 import {
-    Image,
-    ScrollView,
-    Text,
-    View,
+  Image,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
-
-import ProductCard from "../components/ProductCard";
-import ScreenContainer from "../components/ScreenContainer";
-
+ 
 export default function DetailScreen({
   route,
 }: any) {
@@ -26,7 +25,7 @@ export default function DetailScreen({
           alignItems: "center",
         }}
       >
-        <Text>Data kosong</Text>
+        <Texts>Data kosong</Texts>
       </View>
     );
   }

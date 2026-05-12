@@ -1,7 +1,7 @@
+import { darkColors, lightColors } from "@theme";
 import { useColorScheme } from "react-native";
-import { darkColors, lightColors } from "../theme/colors";
 
-export default function useThemeMode() {
+export function useThemeMode() {
   const scheme = useColorScheme();
 
   const colors =

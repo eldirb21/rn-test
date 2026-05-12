@@ -1,29 +1,20 @@
+import { EmptyState, ErrorState, Loading, ScreenContainer } from "@atoms";
+import { ProductCard } from "@molecules";
+import { getEmail, removeToken } from "@storage";
+import { api } from "@utils";
 import React, {
-    useCallback,
-    useEffect,
-    useState,
+  useCallback,
+  useEffect,
+  useState,
 } from "react";
 
 import {
-    FlatList,
-    RefreshControl,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-
-
-import EmptyState from "../components/EmptyState";
-import ErrorState from "../components/ErrorState";
-import ProductCard from "../components/ProductCard";
-import ScreenContainer from "../components/ScreenContainer";
-
-import {
-    getEmail,
-    removeToken,
-} from "../storage/auth.storage";
-import Loading from "../components/ Loading";
-import api from "../utils/axios";
 
 export default function HomeScreen({
   navigation,
@@ -62,11 +53,11 @@ export default function HomeScreen({
       try {
         setError("");
 
-        const response =
-          await api.get("/products");
+        const { data } = await api.get("/products");
+        console.log(data);
 
         setProducts(
-          response.data.products
+          data.products
         );
       } catch (error) {
         setError(
