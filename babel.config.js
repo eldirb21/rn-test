@@ -18,10 +18,10 @@ module.exports = function (api) {
 
           alias: {
             "@atoms":
-              ".src/components/atoms",
+              "./src/components/atoms",
 
             "@molecules":
-              ".src/components/molecules",
+              "./src/components/molecules",
 
             "@hooks":
               "./src/hooks",

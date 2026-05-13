@@ -1,6 +1,7 @@
 import React from "react";
 import {
   TouchableOpacity,
+  ViewStyle,
 } from "react-native";
 import { Texts } from "./Texts";
 
@@ -10,14 +11,17 @@ export function CustomButton({
 }: any) {
   return (
     <TouchableOpacity
+      activeOpacity={.8}
       onPress={onPress}
-      style={{
-        backgroundColor: "#72e625",
-        padding: 16,
-        borderRadius: 10,
-      }}
+      style={btn}
     >
-      <Texts type="subtitle" weight="semiBold" center>{title}</Texts>
+      <Texts  size={14} weight="semiBold" center>{title}</Texts>
     </TouchableOpacity>
   );
+}
+
+const btn: ViewStyle = {
+  backgroundColor: "#72e625",
+  padding: 8,
+  borderRadius: 10,
 }
