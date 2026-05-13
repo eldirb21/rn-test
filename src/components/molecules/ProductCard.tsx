@@ -1,52 +1,48 @@
 import { Texts } from '@atoms'
+import { sizes } from '@constants'
 import React from 'react'
-import { Image, TouchableOpacity, View, ViewStyle } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 
 export function ProductCard({ item, onPress }: any) {
   return (
-    <View style={item}>
+    <TouchableOpacity style={items} activeOpacity={0.9} onPress={onPress}>
       <Image
-        source={{
-          uri: item.thumbnail,
-        }}
+        source={{ uri: item.thumbnail }}
         resizeMode="contain"
-        style={{
-          width: '100%',
-          height: 200,
-        }}
+        style={imageBanner}
       />
 
-      <View
-        style={{
-          padding: 16,
-        }}
-      >
-        <Texts
-          style={{
-            fontWeight: '700',
-            fontSize: 18,
-          }}
-        >
+      <View style={contentFooter}>
+        <Texts weight="bold" size={sizes.font16}>
           {item.title}
         </Texts>
 
         <Texts numberOfLines={2}>{item.description}</Texts>
 
-        <Texts
-          style={{
-            marginTop: 8,
-            fontWeight: 'bold',
-          }}
-        >
+        <Texts weight="bold" style={{ marginTop: 8 }}>
           ${item.price}
         </Texts>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
-const item: ViewStyle = {
+const items: ViewStyle = {
   backgroundColor: '#fff',
-  marginBottom: 16,
   overflow: 'hidden',
+}
+
+const imageBanner: ImageStyle = {
+  width: '100%',
+  height: 200,
+}
+
+const contentFooter: ViewStyle = {
+  padding: 16,
 }

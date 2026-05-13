@@ -1,8 +1,8 @@
-import { EmptyState, ScreenContainer } from '@atoms'
+import { EmptyState, ScreenContainer, Texts } from '@atoms'
+import { sizes } from '@constants'
 import { Header, ProductCard } from '@molecules'
 import React from 'react'
-
-import { Image, ScrollView, Text, ViewStyle } from 'react-native'
+import { Image, ImageStyle, ScrollView, View, ViewStyle } from 'react-native'
 
 export default function DetailScreen({ navigation, route }: any) {
   const { product } = route.params
@@ -13,49 +13,26 @@ export default function DetailScreen({ navigation, route }: any) {
       {!product ? (
         <EmptyState message={'Data kosong'} />
       ) : (
-        <ScrollView style={scrolled}>
+        <ScrollView
+          contentContainerStyle={scrolled}
+          showsVerticalScrollIndicator={false}
+        >
           <ProductCard item={product} />
+          <View style={{ paddingHorizontal: 12 }}>
+            <Image source={{ uri: product.thumbnail }} style={imageDesc} />
+            <Texts weight="semiBold" size={sizes.font14} color="#686767">
+              {'Description'}
+            </Texts>
+            <Texts weight="bold" size={sizes.font20}>
+              {product.title}
+            </Texts>
 
-          <Image
-            source={{
-              uri: product.thumbnail,
-            }}
-            style={{
-              width: '100%',
-              height: 250,
-              borderRadius: 20,
-              marginTop: 20,
-            }}
-          />
+            <Texts size={sizes.font14}>{product.description}</Texts>
 
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: 'bold',
-              marginTop: 20,
-            }}
-          >
-            {product.title}
-          </Text>
-
-          <Text
-            style={{
-              marginTop: 16,
-              lineHeight: 24,
-            }}
-          >
-            {product.description}
-          </Text>
-
-          <Text
-            style={{
-              marginTop: 20,
-              fontSize: 24,
-              fontWeight: 'bold',
-            }}
-          >
-            ${product.price}
-          </Text>
+            <Texts size={sizes.font16} weight="bold">
+              ${product.price}
+            </Texts>
+          </View>
         </ScrollView>
       )}
     </ScreenContainer>
@@ -63,6 +40,14 @@ export default function DetailScreen({ navigation, route }: any) {
 }
 
 const scrolled: ViewStyle = {
-  flex: 1,
-  // padding: 16,
+  flexGrow: 1,
+  paddingBottom: 50,
+}
+
+const imageDesc: ImageStyle = {
+  width: '100%',
+  height: 250,
+  borderRadius: 20,
+  marginVertical: 20,
+  resizeMode: 'contain',
 }
