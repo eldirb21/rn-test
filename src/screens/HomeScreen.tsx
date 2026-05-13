@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }: any) {
         renderItem={renderItem}
         ListEmptyComponent={<EmptyState />}
         ItemSeparatorComponent={
-          <View style={{ height: 4, backgroundColor: colors.placeholder }} />
+          <View style={{ height: 4, backgroundColor: colors.border }} />
         }
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

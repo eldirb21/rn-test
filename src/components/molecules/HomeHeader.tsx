@@ -1,4 +1,4 @@
-import { View, StatusBar, TouchableOpacity, ViewStyle } from 'react-native'
+import { View, TouchableOpacity, ViewStyle } from 'react-native'
 import React, { useState } from 'react'
 import { Texts } from '@atoms'
 import { removeToken } from '@storage'
@@ -22,7 +22,6 @@ export const HomeHeader = ({ navigation, email }: Props) => {
 
   return (
     <View>
-      <StatusBar barStyle={'default'} backgroundColor={colors.baseColor} />
       <Header
         title="Welcome"
         right={
@@ -68,7 +67,7 @@ const itemContainer = (colors: any): ViewStyle => ({
   backgroundColor: colors.white,
   position: 'absolute',
   top: 20,
-  right: 50,
+  right: '15%',
   borderRadius: 20,
   borderTopEndRadius: 0,
 

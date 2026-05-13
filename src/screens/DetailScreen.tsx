@@ -3,14 +3,7 @@ import { sizes } from '@constants'
 import { useThemeMode } from '@hooks'
 import { Header, ProductCard } from '@molecules'
 import React from 'react'
-import {
-  Image,
-  ImageStyle,
-  ScrollView,
-  StatusBar,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { Image, ImageStyle, ScrollView, View, ViewStyle } from 'react-native'
 
 export default function DetailScreen({ navigation, route }: any) {
   const { colors } = useThemeMode()

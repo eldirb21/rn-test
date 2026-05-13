@@ -1,4 +1,10 @@
-import { View, TouchableOpacity, ViewStyle, TextStyle } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  ViewStyle,
+  TextStyle,
+  StatusBar,
+} from 'react-native'
 
 import React, { ReactNode } from 'react'
 
@@ -16,35 +22,41 @@ type Props = {
 }
 
 export const Header = ({ navigation, title, right, backcable }: Props) => {
-  const { colors } = useThemeMode()
+  const { colors, isDark } = useThemeMode()
 
   return (
-    <View style={header(colors)}>
-      {backcable && (
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.goBack()}
+    <>
+      <StatusBar
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={colors.baseColor}
+      />
+      <View style={header(colors)}>
+        {backcable && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.goBack()}
+          >
+            <Icons name="chevron-back" type="Ionicons" color={colors.white} />
+          </TouchableOpacity>
+        )}
+
+        <Texts
+          weight="semiBold"
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={titles}
+          color={colors.white}
         >
-          <Icons name="chevron-back" type="Ionicons" color={colors.white} />
-        </TouchableOpacity>
-      )}
+          {title}
+        </Texts>
 
-      <Texts
-        weight="semiBold"
-        numberOfLines={1}
-        ellipsizeMode="tail"
-        style={titles}
-        color={colors.white}
-      >
-        {title}
-      </Texts>
-
-      {right ? (
-        <View style={rightContent}>{right}</View>
-      ) : (
-        <View style={{ width: 24 }} />
-      )}
-    </View>
+        {right ? (
+          <View style={rightContent}>{right}</View>
+        ) : (
+          <View style={{ width: 24 }} />
+        )}
+      </View>
+    </>
   )
 }
 
