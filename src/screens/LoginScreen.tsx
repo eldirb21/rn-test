@@ -18,8 +18,8 @@ interface InputProps {
 }
 export default function LoginScreen({ navigation }: any) {
   const [inputs, setInputs] = useState<InputProps>({
-    email: 'test_usr@gmail.com',
-    password: 'User12345',
+    email: '',
+    password: '',
   })
   const [errors, setErrors] = useState<InputProps>({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
