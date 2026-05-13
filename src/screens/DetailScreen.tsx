@@ -1,10 +1,20 @@
 import { EmptyState, ScreenContainer, Texts } from '@atoms'
 import { sizes } from '@constants'
+import { useThemeMode } from '@hooks'
 import { Header, ProductCard } from '@molecules'
 import React from 'react'
-import { Image, ImageStyle, ScrollView, View, ViewStyle } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  ScrollView,
+  StatusBar,
+  View,
+  ViewStyle,
+} from 'react-native'
 
 export default function DetailScreen({ navigation, route }: any) {
+  const { colors } = useThemeMode()
+
   const { product } = route.params
 
   return (
@@ -14,22 +24,28 @@ export default function DetailScreen({ navigation, route }: any) {
         <EmptyState message={'Data kosong'} />
       ) : (
         <ScrollView
-          contentContainerStyle={scrolled}
+          contentContainerStyle={scrolled(colors)}
           showsVerticalScrollIndicator={false}
         >
           <ProductCard item={product} />
           <View style={{ paddingHorizontal: 12 }}>
             <Image source={{ uri: product.thumbnail }} style={imageDesc} />
-            <Texts weight="semiBold" size={sizes.font14} color="#686767">
+            <Texts
+              weight="semiBold"
+              size={sizes.font14}
+              color={colors.placeholder}
+            >
               {'Description'}
             </Texts>
-            <Texts weight="bold" size={sizes.font20}>
+            <Texts weight="bold" size={sizes.font20} color={colors.black}>
               {product.title}
             </Texts>
 
-            <Texts size={sizes.font14}>{product.description}</Texts>
+            <Texts size={sizes.font14} color={colors.black}>
+              {product.description}
+            </Texts>
 
-            <Texts size={sizes.font16} weight="bold">
+            <Texts size={sizes.font16} weight="bold" color={colors.black}>
               ${product.price}
             </Texts>
           </View>
@@ -39,10 +55,11 @@ export default function DetailScreen({ navigation, route }: any) {
   )
 }
 
-const scrolled: ViewStyle = {
+const scrolled = (colors: any): ViewStyle => ({
   flexGrow: 1,
   paddingBottom: 50,
-}
+  backgroundColor: colors.background2,
+})
 
 const imageDesc: ImageStyle = {
   width: '100%',

@@ -1,15 +1,17 @@
 import React from 'react'
 import { View, ViewStyle } from 'react-native'
 import { Texts } from './Texts'
+import { useThemeMode } from '@hooks'
 
 export function ErrorState({ message }: { message: string }) {
+  const { colors } = useThemeMode()
   return (
-    <View style={content}>
+    <View style={content(colors)}>
       <Texts>{message}</Texts>
     </View>
   )
 }
-const content: ViewStyle = {
+const content = (colors: any): ViewStyle => ({
   position: 'absolute',
   top: 85,
   bottom: 0,
@@ -20,5 +22,5 @@ const content: ViewStyle = {
   alignItems: 'center',
   marginTop: 10,
   zIndex: 9,
-  backgroundColor: '#FFF',
-}
+  backgroundColor: colors.white,
+})

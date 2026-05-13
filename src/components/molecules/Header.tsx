@@ -1,8 +1,9 @@
-import { View, TouchableOpacity, ViewStyle } from 'react-native'
+import { View, TouchableOpacity, ViewStyle, TextStyle } from 'react-native'
 
 import React, { ReactNode } from 'react'
 
 import { Icons, Texts } from '@atoms'
+import { useThemeMode } from '@hooks'
 
 type Props = {
   navigation?: any
@@ -15,14 +16,16 @@ type Props = {
 }
 
 export const Header = ({ navigation, title, right, backcable }: Props) => {
+  const { colors } = useThemeMode()
+
   return (
-    <View style={header}>
+    <View style={header(colors)}>
       {backcable && (
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.goBack()}
         >
-          <Icons name="chevron-back" type="Ionicons" />
+          <Icons name="chevron-back" type="Ionicons" color={colors.white} />
         </TouchableOpacity>
       )}
 
@@ -30,10 +33,8 @@ export const Header = ({ navigation, title, right, backcable }: Props) => {
         weight="semiBold"
         numberOfLines={1}
         ellipsizeMode="tail"
-        style={{
-          flex: 1,
-          marginLeft: 8,
-        }}
+        style={titles}
+        color={colors.white}
       >
         {title}
       </Texts>
@@ -47,20 +48,19 @@ export const Header = ({ navigation, title, right, backcable }: Props) => {
   )
 }
 
-const header: ViewStyle = {
+const header = (colors: any): ViewStyle => ({
   height: 56,
-
-  backgroundColor: '#72e625',
-
+  backgroundColor: colors.baseColor,
   flexDirection: 'row',
-
   alignItems: 'center',
-
   paddingHorizontal: 16,
-}
+})
 
 const rightContent: ViewStyle = {
   justifyContent: 'center',
-
   alignItems: 'center',
+}
+const titles: TextStyle = {
+  flex: 1,
+  marginLeft: 8,
 }

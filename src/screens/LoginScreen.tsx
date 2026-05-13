@@ -5,6 +5,7 @@ import {
   TextInputs,
   Texts,
 } from '@atoms'
+import { useThemeMode } from '@hooks'
 import { loginService } from '@services'
 import { saveEmail, saveToken } from '@storage'
 import { validateEmail } from '@utils'
@@ -18,10 +19,12 @@ interface InputProps {
 export default function LoginScreen({ navigation }: any) {
   const [inputs, setInputs] = useState<InputProps>({
     email: 'test@gmail.com',
-    password: '@135135Ts',
+    password: '2425d',
   })
   const [errors, setErrors] = useState<InputProps>({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
+
+  const { colors, isDark } = useThemeMode()
 
   const validation = () => {
     const { email, password } = inputs
@@ -75,17 +78,21 @@ export default function LoginScreen({ navigation }: any) {
   }
   return (
     <ScreenContainer>
-      <View style={bgTop} />
+      <View style={bgTop(colors, isDark)} />
       <View style={container}>
         <View style={containerTitle}>
           <View style={contentTitle}>
-            <Texts type="title">Hallo</Texts>
-            <Texts type="subtitle">Welcome app test!</Texts>
+            <Texts color={colors.white} type="title">
+              Hallo
+            </Texts>
+            <Texts color={colors.white} type="subtitle">
+              Welcome to My App Test!
+            </Texts>
           </View>
         </View>
         <ScrollView contentContainerStyle={scroller}>
           <View style={form}>
-            <Texts center type="subtitle" style={title}>
+            <Texts center type="subtitle" color={colors.black} style={title}>
               Login
             </Texts>
 
@@ -103,7 +110,7 @@ export default function LoginScreen({ navigation }: any) {
               title="Password"
               placeholder="Password"
               leftIcon="key"
-              rightIcon="eye"
+              rightIcon="eye-off-outline"
               secureEntry
               value={inputs.password}
               onChangeText={(val) => handlerChange('Password', val)}
@@ -125,28 +132,32 @@ export default function LoginScreen({ navigation }: any) {
   )
 }
 
-const bgTop: ViewStyle = {
-  backgroundColor: '#72e625',
+const bgTop = (colors: any, isDark: boolean): ViewStyle => ({
+  backgroundColor: colors.baseColor,
   height: '32%',
   position: 'absolute',
   top: 0,
   left: 0,
   right: 0,
   bottom: '50%',
-  borderBottomStartRadius: '50%',
-  borderBottomEndRadius: '50%',
-}
+  borderBottomStartRadius: 999,
+  borderBottomEndRadius: 999,
+
+  borderBottomWidth: 3,
+  borderStartWidth: 3,
+  borderEndWidth: 3,
+  borderColor: isDark ? colors.white : colors.baseColor,
+})
 
 const containerTitle: ViewStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'absolute',
-  top: '10%',
+  top: '6%',
   left: 0,
   right: 0,
 }
 const contentTitle: ViewStyle = {
-  backgroundColor: 'rgba(255, 255, 255, 0.13)',
   padding: 8,
   paddingHorizontal: 40,
   borderRadius: 100,

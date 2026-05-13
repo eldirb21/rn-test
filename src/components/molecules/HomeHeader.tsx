@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Texts } from '@atoms'
 import { removeToken } from '@storage'
 import { Header } from './Header'
+import { useThemeMode } from '@hooks'
 
 type Props = {
   navigation: any
@@ -10,6 +11,8 @@ type Props = {
 }
 
 export const HomeHeader = ({ navigation, email }: Props) => {
+  const { colors } = useThemeMode()
+
   const [showItem, setShowItem] = useState(false)
   const logout = async () => {
     setShowItem(false)
@@ -19,31 +22,31 @@ export const HomeHeader = ({ navigation, email }: Props) => {
 
   return (
     <View>
-      <StatusBar barStyle={'default'} backgroundColor="#72e625" />
+      <StatusBar barStyle={'default'} backgroundColor={colors.baseColor} />
       <Header
         title="Welcome"
         right={
           <TouchableOpacity
             activeOpacity={0.8}
-            style={avatar}
+            style={avatar(colors)}
             onPress={() => setShowItem(!showItem)}
           >
             <Texts
-              color="#449d08"
+              color={colors.defaultColor}
               weight="semiBold"
               style={{ fontStyle: 'italic', textTransform: 'uppercase' }}
             >
-              {email.slice(0, 2)}
+              {email?.slice(0, 2)}
             </Texts>
           </TouchableOpacity>
         }
       />
 
       {showItem && (
-        <View style={itemContainer}>
-          <Texts>{email}</Texts>
+        <View style={itemContainer(colors)}>
+          <Texts color={colors.black}>{email}</Texts>
           <TouchableOpacity activeOpacity={0.8} onPress={logout}>
-            <Texts color="#ea0a0a">Logout</Texts>
+            <Texts color={colors.danger}>Logout</Texts>
           </TouchableOpacity>
         </View>
       )}
@@ -51,27 +54,18 @@ export const HomeHeader = ({ navigation, email }: Props) => {
   )
 }
 
-const header: ViewStyle = {
-  height: 45,
-  backgroundColor: '#72e625',
-  justifyContent: 'space-between',
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: 8,
-}
-
-const avatar: ViewStyle = {
-  backgroundColor: '#FFF',
+const avatar = (colors: any): ViewStyle => ({
+  backgroundColor: colors.white,
   height: 40,
   width: 40,
   justifyContent: 'center',
   alignItems: 'center',
   borderRadius: 100,
-}
+})
 
-const itemContainer: ViewStyle = {
+const itemContainer = (colors: any): ViewStyle => ({
   padding: 12,
-  backgroundColor: '#FFF',
+  backgroundColor: colors.white,
   position: 'absolute',
   top: 20,
   right: 50,
@@ -79,14 +73,13 @@ const itemContainer: ViewStyle = {
   borderTopEndRadius: 0,
 
   zIndex: 999,
-  shadowColor: '#000',
+  shadowColor: colors.black,
   shadowOffset: {
     width: 0,
     height: 2,
   },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
-
   elevation: 5,
   gap: 4,
-}
+})

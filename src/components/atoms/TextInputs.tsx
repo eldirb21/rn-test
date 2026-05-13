@@ -9,6 +9,7 @@ import {
 import { Icons } from './Icons'
 import { Texts } from './Texts'
 import { sizes } from '@constants'
+import { useThemeMode } from '@hooks'
 
 type Props = {
   title?: string
@@ -20,6 +21,7 @@ type Props = {
 
 export const TextInputs = (props: Props) => {
   const hasError = !!props.error
+  const { colors } = useThemeMode()
 
   const [secureText, setSecureText] = useState(true)
 
@@ -30,14 +32,14 @@ export const TextInputs = (props: Props) => {
   return (
     <View style={{ gap: 1 }}>
       {props.title && (
-        <Texts color="#1A1A1A" size={sizes.font12} weight="medium">
+        <Texts color={colors.black} size={sizes.font12} weight="medium">
           {props.title}
         </Texts>
       )}
       <View
         style={{
-          borderColor: hasError ? '#EF4444' : '#E5E7EB',
-          ...inputContainer,
+          borderColor: hasError ? colors.danger : colors.border,
+          ...inputContainer(colors),
         }}
       >
         {props.leftIcon && (
@@ -45,29 +47,30 @@ export const TextInputs = (props: Props) => {
             type="Ionicons"
             name={props.leftIcon}
             size={20}
-            color={hasError ? '#EF4444' : '#6B7280'}
+            color={hasError ? colors.danger : colors.grey}
             style={margin}
           />
         )}
 
         <TextInput
-          style={input}
+          style={input(colors)}
           secureTextEntry={props.secureEntry ? secureText : false}
+          placeholderTextColor={colors.placeholder}
           {...props}
         />
         {props.rightIcon && (
           <Icons
             type="Ionicons"
-            name={secureText ? props.rightIcon : 'eye-show'}
+            name={secureText ? props.rightIcon : 'eye-outline'}
             size={sizes.font20}
-            color="#000"
+            color={colors.grey}
             onPress={handlerShowHiddenValue}
             style={margin}
           />
         )}
       </View>
       {props.error && (
-        <Texts color="#EF4444" size={sizes.font12} weight="medium">
+        <Texts color={colors.danger} size={sizes.font12} weight="medium">
           {props.error}
         </Texts>
       )}
@@ -76,16 +79,16 @@ export const TextInputs = (props: Props) => {
 }
 
 const margin: ViewStyle = { marginHorizontal: 6 }
-const inputContainer: ViewStyle = {
+const inputContainer = (colors: any): ViewStyle => ({
   flexDirection: 'row',
   alignItems: 'center',
   borderWidth: 1,
-  backgroundColor: '#e3e3e32d',
+  backgroundColor: colors.grey1,
   borderRadius: 16,
-}
-const input: TextStyle = {
+})
+const input = (colors: any): TextStyle => ({
   flex: 1,
   borderRadius: 8,
-  color: '#000',
-  backgroundColor: 'transparent',
-}
+  color: colors.black,
+  backgroundColor: colors.trasnparent,
+})
