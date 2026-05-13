@@ -8,7 +8,7 @@ import {
 import { useThemeMode } from '@hooks'
 import { loginService } from '@services'
 import { saveEmail, saveToken } from '@storage'
-import { validateEmail } from '@utils'
+import { users, validateEmail } from '@utils'
 import React, { useState } from 'react'
 import { Alert, ScrollView, TextStyle, View, ViewStyle } from 'react-native'
 
@@ -18,8 +18,8 @@ interface InputProps {
 }
 export default function LoginScreen({ navigation }: any) {
   const [inputs, setInputs] = useState<InputProps>({
-    email: '',
-    password: '',
+    email: 'test_usr@gmail.com',
+    password: 'User12345',
   })
   const [errors, setErrors] = useState<InputProps>({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
@@ -44,11 +44,22 @@ export default function LoginScreen({ navigation }: any) {
     return true
   }
 
+  const checkUsers = (input: InputProps) => {
+    return users.some(
+      (e) => e.email === input.email && e.password === input.password,
+    )
+  }
   const handleLogin = async () => {
     try {
       const { email, password } = inputs
       const valid = validation()
       if (!valid) return
+
+      const availableUser = checkUsers(inputs)
+      if (!availableUser) {
+        Alert.alert('Error', 'User cannot be found!')
+        return
+      }
 
       setLoading(true)
 
