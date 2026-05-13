@@ -1,169 +1,81 @@
-import { EmptyState, ErrorState, Loading, ScreenContainer } from "@atoms";
-import { ProductCard } from "@molecules";
-import { getEmail, removeToken } from "@storage";
-import { api } from "@utils";
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { EmptyState, ErrorState, Loading, ScreenContainer } from '@atoms'
+import { HomeHeader, ProductCard } from '@molecules'
+import { getEmail } from '@storage'
+import { api } from '@utils'
+import React, { useCallback, useEffect, useState } from 'react'
 
-import {
-  FlatList,
-  RefreshControl,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl } from 'react-native'
 
-export default function HomeScreen({
-  navigation,
-}: any) {
-  const [products, setProducts] =
-    useState([]);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [refreshing, setRefreshing] =
-    useState(false);
-
-  const [error, setError] =
-    useState("");
-
-  const [email, setEmail] =
-    useState("");
+export default function HomeScreen({ navigation }: any) {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [error, setError] = useState('')
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
-    loadEmail();
-    fetchProducts();
-  }, []);
+    loadEmail()
+    fetchProducts()
+  }, [])
 
   const loadEmail = async () => {
-    const savedEmail =
-      await getEmail();
+    const savedEmail = await getEmail()
 
     if (savedEmail) {
-      setEmail(savedEmail);
+      setEmail(savedEmail)
     }
-  };
+  }
 
-  const fetchProducts =
-    async () => {
-      try {
-        setError("");
+  const fetchProducts = async () => {
+    try {
+      setError('')
 
-        const { data } = await api.get("/products");
-        console.log(data);
+      const { data } = await api.get('/products')
 
-        setProducts(
-          data.products
-        );
-      } catch (error) {
-        setError(
-          "Gagal mengambil data"
-        );
-      } finally {
-        setLoading(false);
-        setRefreshing(false);
-      }
-    };
+      setProducts(data.products)
+    } catch (error) {
+      setError('Gagal mengambil data')
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }
 
   const onRefresh = () => {
-    setRefreshing(true);
-    fetchProducts();
-  };
-
-  const logout = async () => {
-    await removeToken();
-
-    navigation.replace("Login");
-  };
-
-  const renderItem = useCallback(
-    ({ item }: any) => {
-      return (
-        <ProductCard
-          item={item}
-          onPress={() =>
-            navigation.navigate(
-              "Detail",
-              {
-                product: item,
-              }
-            )
-          }
-        />
-      );
-    },
-    []
-  );
-
-  if (loading) {
-    return <Loading />;
+    setRefreshing(true)
+    fetchProducts()
   }
 
-  if (error) {
+  const renderItem = useCallback(({ item }: any) => {
     return (
-      <ErrorState
-        message={error}
+      <ProductCard
+        item={item}
+        onPress={() =>
+          navigation.navigate('Detail', {
+            product: item,
+          })
+        }
       />
-    );
-  }
+    )
+  }, [])
+
+  if (loading) return <Loading />
 
   return (
     <ScreenContainer>
-      <View
-        style={{
-          flex: 1,
-          padding: 16,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 18,
-            marginBottom: 8,
-          }}
-        >
-          {email}
-        </Text>
+      <HomeHeader navigation={navigation} email={email} />
 
-        <TouchableOpacity
-          onPress={logout}
-          style={{
-            marginBottom: 20,
-          }}
-        >
-          <Text
-            style={{
-              color: "red",
-            }}
-          >
-            Logout
-          </Text>
-        </TouchableOpacity>
+      {error && <ErrorState message={error} />}
 
-        <FlatList
-          data={products}
-          keyExtractor={(item: any) =>
-            item.id.toString()
-          }
-          renderItem={renderItem}
-          ListEmptyComponent={
-            <EmptyState />
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={
-                refreshing
-              }
-              onRefresh={
-                onRefresh
-              }
-            />
-          }
-        />
-      </View>
+      <FlatList
+        data={products}
+        keyExtractor={(item: any) => item.id.toString()}
+        renderItem={renderItem}
+        ListEmptyComponent={<EmptyState />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
     </ScreenContainer>
-  );
+  )
 }

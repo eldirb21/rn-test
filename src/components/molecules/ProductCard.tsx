@@ -1,31 +1,17 @@
-import { Texts } from "@atoms";
-import React from "react";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Texts } from '@atoms'
+import React from 'react'
+import { Image, TouchableOpacity, View, ViewStyle } from 'react-native'
 
-export function ProductCard({
-  item,
-  onPress,
-}: any) {
+export function ProductCard({ item, onPress }: any) {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{
-        backgroundColor: "#fff",
-        marginBottom: 16,
-        borderRadius: 16,
-        overflow: "hidden",
-      }}
-    >
+    <View style={item}>
       <Image
         source={{
           uri: item.thumbnail,
         }}
+        resizeMode="contain"
         style={{
-          width: "100%",
+          width: '100%',
           height: 200,
         }}
       />
@@ -37,26 +23,30 @@ export function ProductCard({
       >
         <Texts
           style={{
-            fontWeight: "700",
+            fontWeight: '700',
             fontSize: 18,
           }}
         >
           {item.title}
         </Texts>
 
-        <Texts numberOfLines={2}>
-          {item.description}
-        </Texts>
+        <Texts numberOfLines={2}>{item.description}</Texts>
 
         <Texts
           style={{
             marginTop: 8,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           ${item.price}
         </Texts>
       </View>
-    </TouchableOpacity>
-  );
+    </View>
+  )
+}
+
+const item: ViewStyle = {
+  backgroundColor: '#fff',
+  marginBottom: 16,
+  overflow: 'hidden',
 }

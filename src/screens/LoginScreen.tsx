@@ -1,26 +1,27 @@
-import { CustomButton, ScreenContainer, Spinner, TextInputs, Texts } from "@atoms";
-import { loginService } from "@services";
-import { saveEmail, saveToken } from "@storage";
-import { validateEmail } from "@utils";
-import React, { useState } from "react";
 import {
-  Alert,
-  ScrollView,
-  TextStyle,
-  View,
-  ViewStyle,
-} from "react-native";
+  CustomButton,
+  ScreenContainer,
+  Spinner,
+  TextInputs,
+  Texts,
+} from '@atoms'
+import { loginService } from '@services'
+import { saveEmail, saveToken } from '@storage'
+import { validateEmail } from '@utils'
+import React, { useState } from 'react'
+import { Alert, ScrollView, TextStyle, View, ViewStyle } from 'react-native'
 
 interface InputProps {
-  email: string;
+  email: string
   password: string
 }
-export default function LoginScreen({
-  navigation,
-}: any) {
-  const [inputs, setInputs] = useState<InputProps>({ email: "", password: "" })
-  const [errors, setErrors] = useState<InputProps>({ email: "", password: "" })
-  const [loading, setLoading] = useState(false);
+export default function LoginScreen({ navigation }: any) {
+  const [inputs, setInputs] = useState<InputProps>({
+    email: 'test@gmail.com',
+    password: '@135135Ts',
+  })
+  const [errors, setErrors] = useState<InputProps>({ email: '', password: '' })
+  const [loading, setLoading] = useState(false)
 
   const validation = () => {
     const { email, password } = inputs
@@ -38,7 +39,6 @@ export default function LoginScreen({
     }
 
     return true
-
   }
 
   const handleLogin = async () => {
@@ -47,25 +47,21 @@ export default function LoginScreen({
       const valid = validation()
       if (!valid) return
 
-      setLoading(true);
+      setLoading(true)
 
-      const response = await loginService(email, password);
+      const response = await loginService(email, password)
 
-      await saveToken(response.token);
+      await saveToken(response.token)
 
-      await saveEmail(email);
+      await saveEmail(email)
 
-      navigation.replace("Home");
+      navigation.replace('Home')
     } catch (error) {
-
-      Alert.alert(
-        "Error",
-        "Login gagal"
-      );
+      Alert.alert('Error', 'Login gagal')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handlerChange = (key: string, val: string) => {
     if (key === 'Email') {
@@ -89,7 +85,9 @@ export default function LoginScreen({
         </View>
         <ScrollView contentContainerStyle={scroller}>
           <View style={form}>
-            <Texts center type="subtitle" style={title}>Login</Texts>
+            <Texts center type="subtitle" style={title}>
+              Login
+            </Texts>
 
             <TextInputs
               title="Email Address"
@@ -97,7 +95,7 @@ export default function LoginScreen({
               placeholder="Email"
               autoCapitalize="none"
               value={inputs.email}
-              onChangeText={(val) => handlerChange("Email", val)}
+              onChangeText={(val) => handlerChange('Email', val)}
               error={errors.email}
             />
 
@@ -108,8 +106,7 @@ export default function LoginScreen({
               rightIcon="eye"
               secureEntry
               value={inputs.password}
-
-              onChangeText={(val) => handlerChange("Password", val)}
+              onChangeText={(val) => handlerChange('Password', val)}
               error={errors.password}
             />
 
@@ -117,16 +114,15 @@ export default function LoginScreen({
 
             <CustomButton
               onPress={handleLogin}
-              title={loading ? "Loading..." : "Login"}
+              title={loading ? 'Loading...' : 'Login'}
             />
           </View>
         </ScrollView>
       </View>
 
       <Spinner visible={loading} />
-
     </ScreenContainer>
-  );
+  )
 }
 
 const bgTop: ViewStyle = {
@@ -137,20 +133,20 @@ const bgTop: ViewStyle = {
   left: 0,
   right: 0,
   bottom: '50%',
-  borderBottomStartRadius: "50%",
-  borderBottomEndRadius: '50%'
+  borderBottomStartRadius: '50%',
+  borderBottomEndRadius: '50%',
 }
 
 const containerTitle: ViewStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   position: 'absolute',
-  top: "10%",
+  top: '10%',
   left: 0,
   right: 0,
 }
 const contentTitle: ViewStyle = {
-  backgroundColor: "rgba(255, 255, 255, 0.13)",
+  backgroundColor: 'rgba(255, 255, 255, 0.13)',
   padding: 8,
   paddingHorizontal: 40,
   borderRadius: 100,
@@ -159,7 +155,7 @@ const contentTitle: ViewStyle = {
 
 const scroller: ViewStyle = {
   flexGrow: 1,
-  justifyContent: 'center'
+  justifyContent: 'center',
 }
 
 const form: ViewStyle = {
@@ -167,7 +163,7 @@ const form: ViewStyle = {
   borderRadius: 10,
   padding: 20,
   gap: 4,
-  shadowColor: "#000",
+  shadowColor: '#000',
   shadowOffset: {
     width: 0,
     height: 2,
@@ -179,14 +175,13 @@ const form: ViewStyle = {
 }
 const container: ViewStyle = {
   flex: 1,
-  justifyContent: "center",
+  justifyContent: 'center',
   padding: 20,
 }
 const title: TextStyle = {
   marginBottom: 20,
 }
 
-
 const devider: ViewStyle = {
-  height: 10
+  height: 10,
 }

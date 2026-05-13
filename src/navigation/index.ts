@@ -1,2 +1,2 @@
-export * from "./AppNavigator"
-export * from "./types" 
+export * from './AppNavigator'
+export * from './types'

@@ -1,16 +1,12 @@
-import jwtEncode from "jwt-encode";
+import jwtEncode from 'jwt-encode'
 
-const secret = process.env.EXPO_PUBLIC_SECRET_KEY || ""
+const secret = process.env.EXPO_PUBLIC_SECRET_KEY || ''
 
-export const generateJWT = (
-  email: string
-) => {
+export const generateJWT = (email: string) => {
   const payload = {
     email,
-    exp:
-      Math.floor(Date.now() / 1000) +
-      60 * 60,
-  };
+    exp: Math.floor(Date.now() / 1000) + 60 * 60,
+  }
 
-  return jwtEncode(payload, secret);
-};
+  return jwtEncode(payload, secret)
+}

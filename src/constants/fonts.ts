@@ -1,4 +1,4 @@
-import { moderateScale } from "./metrics";
+import { moderateScale } from './metrics'
 
 const sizes = {
   font6: moderateScale(6),
@@ -14,22 +14,22 @@ const sizes = {
   font26: moderateScale(26),
   font28: moderateScale(28),
   font30: moderateScale(30),
-};
+}
 const weight = {
-  full: "900",
-  semi: "600",
-  low: "400",
-  bold: "bold",
-  normal: "normal",
-};
+  full: '900',
+  semi: '600',
+  low: '400',
+  bold: 'bold',
+  normal: 'normal',
+}
 
-type FontWeight = "regular" | "medium" | "semiBold" | "bold";
+type FontWeight = 'regular' | 'medium' | 'semiBold' | 'bold'
 
 const fonts = {
-  regular: "PoppinsRegular",
-  medium: "PoppinsMedium",
-  bold: "PoppinsBold",
-  semiBold: "PoppinsSemiBold",
-} as const;
+  regular: 'PoppinsRegular',
+  medium: 'PoppinsMedium',
+  bold: 'PoppinsBold',
+  semiBold: 'PoppinsSemiBold',
+} as const
 
-export { sizes, fonts, weight, FontWeight };
+export { sizes, fonts, weight, FontWeight }
